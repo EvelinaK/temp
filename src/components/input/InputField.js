@@ -21,30 +21,31 @@ import Typography from '@material-ui/core/Typography';
 
   const useStyles = makeStyles(theme => ({
 
-    root: {
-        border: "none",
-        overflow: "hidden",
-        borderRadius: 5,
-        backgroundColor: "#F1FAF7",
-        transition: theme.transitions.create(["border-color", "box-shadow"]),
-        width:'100%',
+    // root: {
+    //     border: "none",
+    //     overflow: "hidden",
+    //     borderRadius: 5,
+    //     backgroundColor: "#F1FAF7",
+    //     transition: theme.transitions.create(["border-color", "box-shadow"]),
+    //     width:'100%',
+    //     caretColor:theme.palette.primary.main,
         
-        "&:hover": {
-          backgroundColor: "#fffff",
-          borderColor: "transparent",
-        },
+    //     "&:hover": {
+    //       backgroundColor: "#fffff",
+    //       borderColor: "transparent",
+    //     },
         
-        "&:focus": {
-          backgroundColor: "#fffff",
-          borderColor: theme.palette.primary.main,
+    //     "&:focus": {
+    //       backgroundColor: "#fffff",
+    //       borderColor: theme.palette.primary.main,
 
           
-        },
+    //     },
       
-      },
-      icon :{
-        color:'#949494',
-     }
+    //   },
+    //   icon :{
+    //     color:'#949494',
+    //  }
 
   }));
 
@@ -52,13 +53,10 @@ import Typography from '@material-ui/core/Typography';
 
 
 
-const CustomField = (props) => {
-  console.log(props)
-  const { name, placeholder, value,error=null, onChange,id } = props;
+const CustomField = ({ name, placeholder, value,error=null,touched, inputIcon, onChange,id,helperText}) => {
+
   const classes = useStyles();
   const [isFocused, setIsFocused] = useState(true);
-
-
 
   const hadleFocus = () => {
     setIsFocused(false)
@@ -67,7 +65,7 @@ const CustomField = (props) => {
   return (
 <>           
           <TextField
-        className={classes.root}
+        // className={classes.root}
         variant="outlined"
         placeholder={placeholder}
         id={id}
@@ -75,22 +73,18 @@ const CustomField = (props) => {
         name={name}
         onFocus={hadleFocus}
         onBlur={()=>setIsFocused(true)}
-  
         onChange={onChange}
-        {...(error && {error:true,helperText:error})}
-       InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <PermIdentityIcon  className={classes.icon} />
-              </InputAdornment>
-            )
-          }}
+        helperText={error && helperText}
+        error={error}
+        fullWidth
 
-      // startAdornment={
-      //   isFocused ? <InputAdornment position="start">
-      //     <PermIdentityIcon  className={classes.icon} />
-      //   </InputAdornment> : null
-      // }
+       InputProps={{
+        startAdornment:(
+          isFocused ? <InputAdornment position="start">
+            {inputIcon}
+          </InputAdornment> : null
+        )
+          }}
 
       />
 
@@ -99,4 +93,4 @@ const CustomField = (props) => {
 
   );
 };
-export default CustomField ;
+export default CustomField;
